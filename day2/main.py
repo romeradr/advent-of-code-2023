@@ -14,6 +14,9 @@ def obtener_cuentas(linea):
     # Ahora eliminamos el "Game X: " y tenemos sólo las jugadas
     jugadas[0] = jugadas[0].split(": ")[1]
 
+    # Inicializamos la lista para calcular los máximos de cada color
+    rgb_max = [0, 0, 0]
+
     for jugada in jugadas:
         # Iteramos sobre cada jugada
         
@@ -24,15 +27,20 @@ def obtener_cuentas(linea):
         for i, word in enumerate(words):        
             if word.isdigit() and "red" in words[i+1]:
                 rgb[0] += int(word)
+                rgb_max[0] = max(rgb_max[0], int(word))
             elif word.isdigit() and "green" in words[i+1]:
                 rgb[1] += int(word)
+                rgb_max[1] = max(rgb_max[1], int(word))
             elif word.isdigit() and "blue" in words[i+1]:
                 rgb[2] += int(word)
+                rgb_max[2] = max(rgb_max[2], int(word))
 
+        '''
         if rgb[0] > 12 or rgb[1] > 13 or rgb[2] > 14:
             return 0
+        '''
     
-    return int(game_number)     
+    return rgb_max[0] * rgb_max[1] * rgb_max[2]
 
 
 f = open("input.txt", "r")
